@@ -1,0 +1,29 @@
+{"title": "AutoCAD Civil 3D Corridor Model",
+ "subtitle": "Route geometry, cross-section design and existing terrain are combined into a corridor whose regions drive sections and quantities",
+ "groups": [
+  {"name": "Route geometry", "parts": [
+   {"id": "align", "label": "Alignment", "detail": "Horizontal plan geometry -> fixes the route path and stationing the corridor follows"},
+   {"id": "prof", "label": "Profile", "detail": "Vertical design grade -> sets the finished-surface elevation at each station"}]},
+  {"name": "Section design", "parts": [
+   {"id": "subasm", "label": "Subassembly", "detail": "One parametric element (pavement, gutter, shoulder) -> sizes a slice of the section"},
+   {"id": "asm", "label": "Assembly", "detail": "Ordered set of subassemblies -> combines them into the full design cross-section template"}]},
+  {"name": "Corridor build", "parts": [
+   {"id": "surf", "label": "Surface", "detail": "Existing-terrain TIN -> supplies ground elevations used for cut, fill and section checking"},
+   {"id": "corr", "label": "Corridor", "detail": "Alignment + profile + assembly + surface -> builds the 3D model of the road along the route"},
+   {"id": "reg", "label": "Corridor region", "detail": "Stretches where one assembly applies -> the corridor splits where the assembly changes"}]},
+  {"name": "Sections & qty", "parts": [
+   {"id": "xsec", "label": "Sections", "detail": "Sampled at design stations from corridor + surface -> verify design against ground"},
+   {"id": "qty", "label": "Quantity takeoff", "detail": "Cut, fill, areas and volumes from corridor surfaces and sections -> feeds construction quantities"}]}],
+ "links": [
+  {"from": "align", "to": "prof", "label": "stations"},
+  {"from": "subasm", "to": "asm", "label": "builds"},
+  {"from": "surf", "to": "corr", "label": "ground"},
+  {"from": "asm", "to": "corr", "label": "section design"},
+  {"from": "prof", "to": "corr", "label": "grade elev"},
+  {"from": "align", "to": "corr", "label": "route"},
+  {"from": "corr", "to": "reg", "label": "varies"},
+  {"from": "reg", "to": "xsec", "label": "sampled"},
+  {"from": "surf", "to": "xsec", "label": "existing ground"},
+  {"from": "corr", "to": "qty", "label": "corridor surfaces"},
+  {"from": "xsec", "to": "qty", "label": "cut/fill"}],
+ "takeaway": "Geometry, section design and terrain become a corridor; its regions carry the design down to checked sections and construction quantities"}
